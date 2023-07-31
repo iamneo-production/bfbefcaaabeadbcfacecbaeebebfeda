@@ -1,0 +1,112 @@
+<style>
+    .card-container {
+       display: flex;
+       flex-wrap: wrap;
+       justify-content: center;
+     }
+   
+     .card {
+       all: unset;
+       border-radius: 4px;
+       border: 1px solid #eee;
+       background-color: #fafafa;
+       height: 40px;
+       width: 200px;
+       margin: 0 8px 16px;
+       padding: 16px;
+       display: flex;
+       flex-direction: row;
+       justify-content: center;
+       align-items: center;
+       transition: all 0.2s ease-in-out;
+       line-height: 24px;
+     }
+   
+     .card-container .card:not(:last-child) {
+       margin-right: 0;
+     }
+   
+     .card.card-small {
+       height: 16px;
+       width: 168px;
+     }
+   
+     .card-container .card:not(.highlight-card) {
+       cursor: pointer;
+     }
+   
+     .card-container .card:not(.highlight-card):hover {
+       transform: translateY(-3px);
+       box-shadow: 0 4px 17px rgba(0, 0, 0, 0.35);
+     }
+   
+     .card-container .card:not(.highlight-card):hover .material-icons path {
+       fill: rgb(105, 103, 103);
+     }
+   
+     .card.highlight-card {
+       background-color: #1976d2;
+       color: white;
+       font-weight: 600;
+       border: none;
+       width: auto;
+       min-width: 30%;
+       position: relative;
+     }
+   
+     .card.card.highlight-card span {
+       margin-left: 60px;
+     }
+   
+   </style>
+   
+   
+   <div  style="height: 20px;background-color: coral;" id="headerContainer">
+       <p style="color: #fff;padding: 3px; ">Calory Tracker</p>
+   </div>
+   
+   <div>
+   <div>search</div>
+   <div>  <input  type="text" id="searchBox" name="searchBox" placeholder="Search Here" [(ngModel)]="searchText"></div>
+   </div>
+   
+   <div>
+   
+       <div>  <button (click)="addNewFoodShow()" style="background-color: coral;color: #fff;" id="newFood">Add new food</button></div>
+       </div>
+       <div>
+         <table>
+           <tr><td> <form>
+             <table [hidden]="!showAddFood">
+                 <tr><td>Name</td> <td> <input   type="text" name="name" id="name" [(ngModel)]="addName"></td></tr>
+                 <tr><td>Calories</td> <td> <input   type="text" name="calories" id="calories" [(ngModel)]="addCalories"></td></tr>
+                 <tr><td>Image</td> <td> <input   type="text" #image name="image" [(ngModel)]="addimage"></td></tr>
+                 <tr><td colspan="2"> <button (click)="addFood()" style="background-color: coral;color: #fff;" id="newFood">submit</button>  </td></tr>
+             </table>
+           </form></td>
+             
+             <td>
+   <div id="totalCalories">
+   <ul *ngFor="let food of todayFoodList" >
+   <li>{{food.name}} {{food.calories}} {{food.qty}}</li>
+   </ul>
+   </div>
+   
+             </td></tr>
+         </table>
+        
+       </div>
+       <div id="displayConatiner">
+           <div *ngFor="let food of foodList  | searchFilter: searchText">
+               <table>
+                   <tr> <td > <img src="{{food.image}}"  style="width: 40px;height: 40px;"/></td><td>
+                       <table>
+                           <tr><td>{{food.name}}</td></tr>
+                           <tr><td>Calary-{{food.calories}}</td></tr>
+                           <tr><td> <input type="text" id="qty" [(ngModel)]="food.qtyInput"><button (click)="addQty(food)" style="background-color: coral;color: #fff;" id="add">add</button>   </td></tr>
+                       </table>
+                       </td></tr>
+               </table>
+   
+           </div>
+       </div>
